@@ -77,8 +77,8 @@ if __name__ == "__main__":
     # Captura da imagem através do navegador
     capture_face_from_browser()
 
-    # Esperar a imagem ser enviada
-    image_data = st.experimental_get_query_params().get('image', [None])[0]
+    # Esperar a imagem ser enviada via parâmetros de consulta
+    image_data = st.query_params.get('image', [None])[0]
 
     if image_data:
         processed_image = process_image(image_data)
