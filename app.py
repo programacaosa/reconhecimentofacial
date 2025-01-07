@@ -1,9 +1,8 @@
 import streamlit as st
-import cv2
-import numpy as np
 import base64
 from PIL import Image
-from io import BytesIO
+import numpy as np
+import io
 
 # Função para exibir o HTML e JavaScript para capturar a imagem da câmera do navegador
 def capture_face_from_browser():
@@ -51,11 +50,11 @@ def capture_face_from_browser():
 def process_image(image_data):
     # Decodificando a imagem base64
     image_bytes = base64.b64decode(image_data)
-    image = Image.open(BytesIO(image_bytes))
-    open_cv_image = np.array(image)
+    image = Image.open(io.BytesIO(image_bytes))
 
-    # Convertendo a imagem para o formato BGR (para o OpenCV)
-    open_cv_image = open_cv_image[:, :, ::-1].copy()
+    # Convertendo a imagem para o formato NumPy (para o OpenCV)
+    open_cv_image = np.array(image)
+    open_cv_image = open_cv_image[:, :, ::-1].copy()  # Convertendo de RGB para BGR
 
     # Detecção de rosto com OpenCV
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
